@@ -2,7 +2,7 @@
 //ETAPE 1 : Charger le style du thème//
 function nathalie_mota_enqueue_styles() {
     wp_enqueue_style('style', get_stylesheet_uri());
-    wp_enqueue_script('main', get_template_directory_uri() . '/js/main.js', array('jquery'), null, true);
+    wp_enqueue_script('scripts', get_template_directory_uri() . '/js/scripts.js', array('jquery'), null, true);
 }
 add_action('wp_enqueue_scripts', 'nathalie_mota_enqueue_styles');
 ?>
@@ -32,3 +32,5 @@ function nathalie_mota_support_logo() {
 }
 add_action( 'after_setup_theme', 'nathalie_mota_support_logo' );
 ?>
+
+
