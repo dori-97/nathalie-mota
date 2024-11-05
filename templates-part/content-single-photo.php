@@ -155,5 +155,53 @@
                     </div> <!--- Fermeture div popup single pour y inclure la nav ---->
             
 
- 
+            <!-- Section des articles similaires -->
+            <section class="must-like">
+                <p>VOUS AIMEREZ AUSSI</p>
+
+                <div class="related-container">
+                    <?php
+                    $current_categories = get_the_terms(get_the_ID(), 'category');
+                    if ($current_categories) {
+                        $category_ids = array_map(function($cat) {
+                            return $cat->term_id;
+                        }, $current_categories);
+
+                        // Arguments pour WP_Query
+                        $args = array(
+                            'post_type' => 'photo',
+                            'tax_query' => array(
+                                array(
+                                    'taxonomy' => 'category',
+                                    'field' => 'term_id',
+                                    'terms' => $category_ids,
+                                ),
+                            ),
+                            'post__not_in' => array(get_the_ID()),
+                            'posts_per_page' => 2,
+                            'orderby' => 'rand',
+                        );
+
+                        $related_posts = new WP_Query($args);
+
+                        if ($related_posts->have_posts()) {
+                        echo '<div class="related-photos">';
+                        while ($related_posts->have_posts()) {
+                        $related_posts->the_post();
+
+                        // inclusion de template photo-block 
+                        get_template_part('templates-part/photo-block');
+                    }
+                        echo '</div>';
+                    } else {
+                        echo '<p>Aucun article similaire trouvé dans cette catégorie.</p>';
+                    }
+
+                        wp_reset_postdata();
+                    } else {
+                        echo '<p>Aucune catégorie trouvée pour cet article.</p>';
+                    }
+                    ?>
+                </div>
+            </section>
         </article>
