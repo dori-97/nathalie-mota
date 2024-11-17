@@ -22,7 +22,7 @@
                         } 
                         
                         // Récupérer et afficher les catégories
-                        $categories = get_the_terms(get_the_ID(), 'category');
+                        $categories = get_the_terms(get_the_ID(), 'photo-categorie');
                         if (!empty($categories) && !is_wp_error($categories)) {
                             echo '<p><strong>CATÉGORIE :</strong> ';
                             $category_links = array();
@@ -161,7 +161,7 @@
 
                 <div class="related-container">
                     <?php
-                    $current_categories = get_the_terms(get_the_ID(), 'category');
+                    $current_categories = get_the_terms(get_the_ID(), 'photo-categorie');
                     if ($current_categories) {
                         $category_ids = array_map(function($cat) {
                             return $cat->term_id;
@@ -172,7 +172,7 @@
                             'post_type' => 'photo',
                             'tax_query' => array(
                                 array(
-                                    'taxonomy' => 'category',
+                                    'taxonomy' => 'photo-categorie',
                                     'field' => 'term_id',
                                     'terms' => $category_ids,
                                 ),
